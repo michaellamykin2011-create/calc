@@ -169,7 +169,7 @@ class MainActivity : AppCompatActivity() {
             }.parse()
             if (result % 1.0 == 0.0) result.toInt().toString() else result.toString()
         } catch (e: Exception) {
-            "Ошибка"
+            "Ошибка!"
         }
     }
 }
