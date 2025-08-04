@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     android:padding="8dp">
 
-    <!-- Дисплей -->
     <TextView
         android:id="@+id/tvResult"
         android:layout_width="match_parent"
@@ -23,7 +22,6 @@
         android:fontFamily="sans-serif-medium"
         android:layout_gravity="center"/>
 
-    <!-- Кнопки -->
     <GridLayout
         android:id="@+id/gridLayout"
         android:layout_width="match_parent"
@@ -35,34 +33,209 @@
         android:alignmentMode="alignMargins"
         android:rowOrderPreserved="false">
 
-        <!-- 1 строка -->
-        <Button android:id="@+id/btnClear" android:text="C" android:layout_row="0" android:layout_column="0"/>
-        <Button android:id="@+id/btnSign" android:text="±" android:layout_row="0" android:layout_column="1"/>
-        <Button android:id="@+id/btnPercent" android:text="%" android:layout_row="0" android:layout_column="2"/>
-        <Button android:id="@+id/btnDivide" android:text="÷" android:layout_row="0" android:layout_column="3"/>
+        <Button
+            android:id="@+id/btnClear"
+            android:text="C"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="fill" />
+        <Button
+            android:id="@+id/btnSign"
+            android:text="±"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="fill" />
+        <Button
+            android:id="@+id/btnPercent"
+            android:text="%"
+            android:layout_row="0"
+            android:layout_column="2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="fill" />
+        <Button
+            android:id="@+id/btnDivide"
+            android:text="÷"
+            android:layout_row="0"
+            android:layout_column="3"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="fill" />
 
-        <!-- 2 строка -->
-        <Button android:id="@+id/btn7" android:text="7" android:layout_row="1" android:layout_column="0"/>
-        <Button android:id="@+id/btn8" android:text="8" android:layout_row="1" android:layout_column="1"/>
-        <Button android:id="@+id/btn9" android:text="9" android:layout_row="1" android:layout_column="2"/>
-        <Button android:id="@+id/btnMultiply" android:text="×" android:layout_row="1" android:layout_column="3"/>
+        <Button
+            android:id="@+id/btn7"
+            android:text="7"
+            android:layout_row="1"
+            android:layout_column="0"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="fill" />
+        <Button
+            android:id="@+id/btn8"
+            android:text="8"
+            android:layout_row="1"
+            android:layout_column="1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="fill" />
+        <Button
+            android:id="@+id/btn9"
+            android:text="9"
+            android:layout_row="1"
+            android:layout_column="2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="fill" />
+        <Button
+            android:id="@+id/btnMultiply"
+            android:text="×"
+            android:layout_row="1"
+            android:layout_column="3"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="fill" />
 
-        <!-- 3 строка -->
-        <Button android:id="@+id/btn4" android:text="4" android:layout_row="2" android:layout_column="0"/>
-        <Button android:id="@+id/btn5" android:text="5" android:layout_row="2" android:layout_column="1"/>
-        <Button android:id="@+id/btn6" android:text="6" android:layout_row="2" android:layout_column="2"/>
-        <Button android:id="@+id/btnMinus" android:text="-" android:layout_row="2" android:layout_column="3"/>
+        <Button
+            android:id="@+id/btn4"
+            android:text="4"
+            android:layout_row="2"
+            android:layout_column="0"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="fill" />
+        <Button
+            android:id="@+id/btn5"
+            android:text="5"
+            android:layout_row="2"
+            android:layout_column="1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="fill" />
+        <Button
+            android:id="@+id/btn6"
+            android:text="6"
+            android:layout_row="2"
+            android:layout_column="2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="fill" />
+        <Button
+            android:id="@+id/btnMinus"
+            android:text="-"
+            android:layout_row="2"
+            android:layout_column="3"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="fill" />
 
-        <!-- 4 строка -->
-        <Button android:id="@+id/btn1" android:text="1" android:layout_row="3" android:layout_column="0"/>
-        <Button android:id="@+id/btn2" android:text="2" android:layout_row="3" android:layout_column="1"/>
-        <Button android:id="@+id/btn3" android:text="3" android:layout_row="3" android:layout_column="2"/>
-        <Button android:id="@+id/btnPlus" android:text="+" android:layout_row="3" android:layout_column="3"/>
+        <Button
+            android:id="@+id/btn1"
+            android:text="1"
+            android:layout_row="3"
+            android:layout_column="0"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="fill" />
+        <Button
+            android:id="@+id/btn2"
+            android:text="2"
+            android:layout_row="3"
+            android:layout_column="1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="fill" />
+        <Button
+            android:id="@+id/btn3"
+            android:text="3"
+            android:layout_row="3"
+            android:layout_column="2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="fill" />
+        <Button
+            android:id="@+id/btnPlus"
+            android:text="+"
+            android:layout_row="3"
+            android:layout_column="3"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="fill" />
 
-        <!-- 5 строка -->
-        <Button android:id="@+id/btnBack" android:text="⌫" android:layout_row="4" android:layout_column="0"/>
-        <Button android:id="@+id/btn0" android:text="0" android:layout_row="4" android:layout_column="1"/>
-        <Button android:id="@+id/btnDot" android:text="." android:layout_row="4" android:layout_column="2"/>
-        <Button android:id="@+id/btnEqual" android:text="=" android:layout_row="4" android:layout_column="3"/>
+        <Button
+            android:id="@+id/btnBack"
+            android:text="⌫"
+            android:layout_row="4"
+            android:layout_column="0"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="fill" />
+        <Button
+            android:id="@+id/btn0"
+            android:text="0"
+            android:layout_row="4"
+            android:layout_column="1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="fill" />
+        <Button
+            android:id="@+id/btnDot"
+            android:text="."
+            android:layout_row="4"
+            android:layout_column="2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="fill" />
+        <Button
+            android:id="@+id/btnEqual"
+            android:text="="
+            android:layout_row="4"
+            android:layout_column="3"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_gravity="fill" />
     </GridLayout>
 </LinearLayout>
