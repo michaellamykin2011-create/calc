@@ -1,5 +1,15 @@
 <resources>
     <style name="Theme.Calculator" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:windowBackground">@color/background</item>
+        <item name="colorPrimary">@color/button</item>
+        <item name="colorPrimaryVariant">@color/operatorButton</item>
+        <item name="colorOnPrimary">@color/buttonText</item>
+        <item name="colorSecondary">@color/operatorButton</item>
+        <item name="colorOnSecondary">@color/operatorButtonText</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="android:textColor">@color/buttonText</item>
+
+        <item name="android:buttonStyle">@style/Widget.AppCompat.Button.Borderless</item>
+
     </style>
 </resources>
