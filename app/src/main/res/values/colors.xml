@@ -1,10 +1,10 @@
 <resources>
-    <color name="background">#181824</color>
-    <color name="display">#22223b</color>
-    <color name="displayText">#f8f8f2</color>
-    <color name="button">#282a36</color>
-    <color name="buttonText">#e0e0e0</color>
-    <color name="operatorButton">#ffb86c</color>
+    <color name="background">#1c1c1c</color>
+    <color name="display">#333333</color>
+    <color name="displayText">#ffffff</color>
+    <color name="button">#333333</color>
+    <color name="buttonText">#ffffff</color>
+    <color name="operatorButton">#ff9f0a</color>
     <color name="operatorButtonText">#ffffff</color>
-    <color name="accent">#50fa7b</color>
+    <color name="accent">#ff9f0a</color>
 </resources>

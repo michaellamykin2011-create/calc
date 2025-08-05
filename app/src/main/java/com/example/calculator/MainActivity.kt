@@ -32,12 +32,13 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btnDot).setOnClickListener { onDecimalPoint() }
         findViewById<Button>(R.id.btnClear).setOnClickListener { onClear() }
         findViewById<Button>(R.id.btnBack).setOnClickListener { onBack() }
+        findViewById<Button>(R.id.btnPercent).setOnClickListener { onOperator("%") }
 
         // Операторы и равно
         findViewById<Button>(R.id.btnPlus).setOnClickListener { onOperator("+") }
         findViewById<Button>(R.id.btnMinus).setOnClickListener { onOperator("-") }
-        findViewById<Button>(R.id.btnMultiply).setOnClickListener { onOperator("*") }
-        findViewById<Button>(R.id.btnDivide).setOnClickListener { onOperator("/") }
+        findViewById<Button>(R.id.btnMultiply).setOnClickListener { onOperator("×") }
+        findViewById<Button>(R.id.btnDivide).setOnClickListener { onOperator("÷") }
         findViewById<Button>(R.id.btnEqual).setOnClickListener { onEqual() }
     }
 
@@ -79,7 +80,7 @@ class MainActivity : AppCompatActivity() {
             input = input.dropLast(1)
             // Проверяем новый последний символ
             lastNumeric = input.isNotEmpty() && input.last().isDigit()
-            lastDot = input.contains('.') && input.takeLastWhile { it != '+' && it != '-' && it != '*' && it != '/' }.contains('.')
+            lastDot = input.contains('.') && input.takeLastWhile { it != '+' && it != '-' && it != '×' && it != '÷' && it != '%' }.contains('.')
             updateResult()
         }
     }
@@ -87,9 +88,9 @@ class MainActivity : AppCompatActivity() {
     private fun onEqual() {
         try {
             val normalized = input
-                .replace('÷', '/')
-                .replace('×', '*')
-                .replace('–', '-')
+                .replace("÷", "/")
+                .replace("×", "*")
+                .replace("%", "/100")
             val result = eval(normalized)
             tvResult.text = result
         } catch (e: Exception) {
@@ -169,7 +170,7 @@ class MainActivity : AppCompatActivity() {
             }.parse()
             if (result % 1.0 == 0.0) result.toInt().toString() else result.toString()
         } catch (e: Exception) {
-            "Ошибка!"
+            "Ошибка"
         }
     }
 }
