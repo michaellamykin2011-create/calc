@@ -7,4 +7,5 @@
     <color name="operatorButton">#ffb86c</color>
     <color name="operatorButtonText">#ffffff</color>
     <color name="accent">#50fa7b</color>
+    <color name="purple_button">#8A2BE2</color>
 </resources>

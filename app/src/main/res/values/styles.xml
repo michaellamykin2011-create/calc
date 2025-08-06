@@ -1,3 +1,5 @@
 <resources>
-    <!-- Стили отключены -->
+    <style name="CalculatorButton" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:textSize">34sp</item>
+    </style>
 </resources>
