@@ -1,12 +1,14 @@
 package com.example.calculator
 
+import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.view.HapticFeedbackConstants
 import android.view.View
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import java.util.Locale // <-- ДОБАВЛЕН ЭТОТ ИМПОРТ
+import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,6 +20,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // --- Код для запуска анимации фона ---
+        val rootLayout = findViewById<LinearLayout>(android.R.id.content).getChildAt(0) as LinearLayout
+        val animDrawable = rootLayout.background as AnimationDrawable
+        animDrawable.setEnterFadeDuration(10)
+        animDrawable.setExitFadeDuration(5000)
+        animDrawable.start()
+        // --- Конец кода для анимации ---
 
         tvResult = findViewById(R.id.tvResult)
         setupClickListeners()
@@ -105,7 +115,6 @@ class MainActivity : AppCompatActivity() {
                     .replace("×", "*")
 
                 val result = if (normalized.contains("%")) {
-                    // Обработка процентов
                     val parts = normalized.split(Regex("(?=[+\\-*/])"))
                     val number = parts.first().toDouble()
                     val percent = parts.last().removePrefix("%").toDouble()
@@ -127,13 +136,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun formatResult(result: Double): String {
-        // ИСПОЛЬЗУЕМ Locale.US, ЧТОБЫ РАЗДЕЛИТЕЛЬ ВСЕГДА БЫЛ ТОЧКОЙ
         val formatted = String.format(Locale.US, "%.8f", result)
             .trimEnd('0')
             .trimEnd('.')
         return if (formatted == "-0") "0" else formatted
     }
-
 
     private fun updateResult() {
         tvResult.text = input.ifEmpty { "0" }
@@ -143,11 +150,7 @@ class MainActivity : AppCompatActivity() {
         return object : Any() {
             var pos = -1
             var ch = 0
-
-            fun nextChar() {
-                ch = if (++pos < expr.length) expr[pos].code else -1
-            }
-
+            fun nextChar() { ch = if (++pos < expr.length) expr[pos].code else -1 }
             fun eat(charToEat: Int): Boolean {
                 while (ch == ' '.code) nextChar()
                 if (ch == charToEat) {
@@ -156,14 +159,12 @@ class MainActivity : AppCompatActivity() {
                 }
                 return false
             }
-
             fun parse(): Double {
                 nextChar()
                 val x = parseExpression()
                 if (pos < expr.length) throw RuntimeException("Unexpected: " + expr[pos])
                 return x
             }
-
             fun parseExpression(): Double {
                 var x = parseTerm()
                 while (true) {
@@ -174,7 +175,6 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
-
             fun parseTerm(): Double {
                 var x = parseFactor()
                 while (true) {
@@ -185,7 +185,6 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
-
             fun parseFactor(): Double {
                 if (eat('+'.code)) return parseFactor()
                 if (eat('-'.code)) return -parseFactor()

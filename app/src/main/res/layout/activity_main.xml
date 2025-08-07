@@ -2,19 +2,20 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:background="@color/background"
+    android:background="@drawable/background_animated_gradient"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="8dp">
+    android:padding="8dp"
+    android:paddingBottom="24dp">
 
     <TextView
         android:id="@+id/tvResult"
-        android:layout_width="350dp"
-        android:layout_height="119dp"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
         android:layout_gravity="center"
-        android:layout_marginBottom="8dp"
-        android:background="@color/display"
-        android:elevation="2dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/button_glass_bg"
+        android:elevation="4dp"
         android:fontFamily="sans-serif-medium"
         android:gravity="end|center_vertical"
         android:padding="12dp"
@@ -44,7 +45,7 @@
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
             android:layout_gravity="fill"
-            android:background="@drawable/button_purple_bg" />
+            android:background="@drawable/button_glass_bg" />
         <Button
             android:id="@+id/btnSign"
             style="@style/CalculatorButton"
@@ -56,7 +57,7 @@
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
             android:layout_gravity="fill"
-            android:background="@drawable/button_purple_bg" />
+            android:background="@drawable/button_glass_bg" />
         <Button
             android:id="@+id/btnPercent"
             style="@style/CalculatorButton"
@@ -68,7 +69,7 @@
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
             android:layout_gravity="fill"
-            android:background="@drawable/button_purple_bg" />
+            android:background="@drawable/button_glass_bg" />
         <Button
             android:id="@+id/btnDivide"
             style="@style/CalculatorButton"
@@ -80,7 +81,7 @@
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
             android:layout_gravity="fill"
-            android:background="@drawable/button_purple_bg" />
+            android:background="@drawable/button_glass_bg" />
 
         <Button
             android:id="@+id/btn7"
@@ -93,7 +94,7 @@
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
             android:layout_gravity="fill"
-            android:background="@drawable/button_operator_bg" />
+            android:background="@drawable/button_glass_bg" />
         <Button
             android:id="@+id/btn8"
             style="@style/CalculatorButton"
@@ -105,7 +106,7 @@
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
             android:layout_gravity="fill"
-            android:background="@drawable/button_operator_bg" />
+            android:background="@drawable/button_glass_bg" />
         <Button
             android:id="@+id/btn9"
             style="@style/CalculatorButton"
@@ -117,7 +118,7 @@
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
             android:layout_gravity="fill"
-            android:background="@drawable/button_operator_bg" />
+            android:background="@drawable/button_glass_bg" />
         <Button
             android:id="@+id/btnMultiply"
             style="@style/CalculatorButton"
@@ -129,7 +130,7 @@
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
             android:layout_gravity="fill"
-            android:background="@drawable/button_purple_bg" />
+            android:background="@drawable/button_glass_bg" />
 
         <Button
             android:id="@+id/btn4"
@@ -142,7 +143,7 @@
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
             android:layout_gravity="fill"
-            android:background="@drawable/button_operator_bg" />
+            android:background="@drawable/button_glass_bg" />
         <Button
             android:id="@+id/btn5"
             style="@style/CalculatorButton"
@@ -154,7 +155,7 @@
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
             android:layout_gravity="fill"
-            android:background="@drawable/button_operator_bg" />
+            android:background="@drawable/button_glass_bg" />
         <Button
             android:id="@+id/btn6"
             style="@style/CalculatorButton"
@@ -166,7 +167,7 @@
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
             android:layout_gravity="fill"
-            android:background="@drawable/button_operator_bg" />
+            android:background="@drawable/button_glass_bg" />
         <Button
             android:id="@+id/btnMinus"
             style="@style/CalculatorButton"
@@ -178,7 +179,7 @@
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
             android:layout_gravity="fill"
-            android:background="@drawable/button_purple_bg" />
+            android:background="@drawable/button_glass_bg" />
 
         <Button
             android:id="@+id/btn1"
@@ -191,7 +192,7 @@
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
             android:layout_gravity="fill"
-            android:background="@drawable/button_operator_bg" />
+            android:background="@drawable/button_glass_bg" />
         <Button
             android:id="@+id/btn2"
             style="@style/CalculatorButton"
@@ -203,7 +204,7 @@
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
             android:layout_gravity="fill"
-            android:background="@drawable/button_operator_bg" />
+            android:background="@drawable/button_glass_bg" />
         <Button
             android:id="@+id/btn3"
             style="@style/CalculatorButton"
@@ -215,7 +216,7 @@
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
             android:layout_gravity="fill"
-            android:background="@drawable/button_operator_bg" />
+            android:background="@drawable/button_glass_bg" />
         <Button
             android:id="@+id/btnPlus"
             style="@style/CalculatorButton"
@@ -227,7 +228,7 @@
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
             android:layout_gravity="fill"
-            android:background="@drawable/button_purple_bg" />
+            android:background="@drawable/button_glass_bg" />
 
         <Button
             android:id="@+id/btnBack"
@@ -240,7 +241,7 @@
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
             android:layout_gravity="fill"
-            android:background="@drawable/button_purple_bg" />
+            android:background="@drawable/button_glass_bg" />
         <Button
             android:id="@+id/btn0"
             style="@style/CalculatorButton"
@@ -252,7 +253,7 @@
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
             android:layout_gravity="fill"
-            android:background="@drawable/button_operator_bg" />
+            android:background="@drawable/button_glass_bg" />
         <Button
             android:id="@+id/btnDot"
             style="@style/CalculatorButton"
@@ -264,7 +265,7 @@
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
             android:layout_gravity="fill"
-            android:background="@drawable/button_purple_bg" />
+            android:background="@drawable/button_glass_bg" />
         <Button
             android:id="@+id/btnEqual"
             style="@style/CalculatorButton"
@@ -276,6 +277,6 @@
             android:layout_columnWeight="1"
             android:layout_rowWeight="1"
             android:layout_gravity="fill"
-            android:background="@drawable/button_purple_bg" />
+            android:background="@drawable/button_glass_bg" />
     </GridLayout>
 </LinearLayout>
