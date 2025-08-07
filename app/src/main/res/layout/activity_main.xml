@@ -9,7 +9,7 @@
 
     <TextView
         android:id="@+id/tvResult"
-        android:layout_width="482dp"
+        android:layout_width="350dp"
         android:layout_height="119dp"
         android:layout_gravity="center"
         android:layout_marginBottom="8dp"

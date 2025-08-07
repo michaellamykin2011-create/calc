@@ -1,9 +1,12 @@
 package com.example.calculator
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.HapticFeedbackConstants
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import java.util.Locale // <-- ДОБАВЛЕН ЭТОТ ИМПОРТ
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,32 +20,44 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         tvResult = findViewById(R.id.tvResult)
+        setupClickListeners()
+    }
 
-        // Числовые кнопки
-        val buttons = listOf(
+    private fun setupClickListeners() {
+        val numericButtons = listOf(
             R.id.btn0, R.id.btn1, R.id.btn2, R.id.btn3, R.id.btn4, R.id.btn5,
             R.id.btn6, R.id.btn7, R.id.btn8, R.id.btn9
         )
-        for (id in buttons) {
-            findViewById<Button>(id).setOnClickListener {
+
+        for (id in numericButtons) {
+            findViewById<Button>(id).setHapticClickListener {
                 onDigit((it as Button).text.toString())
             }
         }
 
-        findViewById<Button>(R.id.btnDot).setOnClickListener { onDecimalPoint() }
-        findViewById<Button>(R.id.btnClear).setOnClickListener { onClear() }
-        findViewById<Button>(R.id.btnBack).setOnClickListener { onBack() }
-        findViewById<Button>(R.id.btnPercent).setOnClickListener { onOperator("%") }
+        findViewById<Button>(R.id.btnDot).setHapticClickListener { onDecimalPoint() }
+        findViewById<Button>(R.id.btnClear).setHapticClickListener { onClear() }
+        findViewById<Button>(R.id.btnBack).setHapticClickListener { onBack() }
+        findViewById<Button>(R.id.btnPercent).setHapticClickListener { onOperator("%") }
+        findViewById<Button>(R.id.btnPlus).setHapticClickListener { onOperator("+") }
+        findViewById<Button>(R.id.btnMinus).setHapticClickListener { onOperator("-") }
+        findViewById<Button>(R.id.btnMultiply).setHapticClickListener { onOperator("×") }
+        findViewById<Button>(R.id.btnDivide).setHapticClickListener { onOperator("÷") }
+        findViewById<Button>(R.id.btnEqual).setHapticClickListener { onEqual() }
+        findViewById<Button>(R.id.btnSign).setHapticClickListener { /* Логика для смены знака */ }
+    }
 
-        // Операторы и равно
-        findViewById<Button>(R.id.btnPlus).setOnClickListener { onOperator("+") }
-        findViewById<Button>(R.id.btnMinus).setOnClickListener { onOperator("-") }
-        findViewById<Button>(R.id.btnMultiply).setOnClickListener { onOperator("×") }
-        findViewById<Button>(R.id.btnDivide).setOnClickListener { onOperator("÷") }
-        findViewById<Button>(R.id.btnEqual).setOnClickListener { onEqual() }
+    private fun View.setHapticClickListener(action: (View) -> Unit) {
+        this.setOnClickListener { view ->
+            view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+            action(view)
+        }
     }
 
     private fun onDigit(digit: String) {
+        if (input == "Ошибка") {
+            input = ""
+        }
         input += digit
         lastNumeric = true
         updateResult()
@@ -58,7 +73,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onOperator(op: String) {
-        // Допускаем только один оператор подряд и только после цифры
         if (input.isNotEmpty() && lastNumeric) {
             input += op
             lastNumeric = false
@@ -76,9 +90,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun onBack() {
         if (input.isNotEmpty()) {
-            val lastChar = input.last()
             input = input.dropLast(1)
-            // Проверяем новый последний символ
             lastNumeric = input.isNotEmpty() && input.last().isDigit()
             lastDot = input.contains('.') && input.takeLastWhile { it != '+' && it != '-' && it != '×' && it != '÷' && it != '%' }.contains('.')
             updateResult()
@@ -86,91 +98,110 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onEqual() {
-        try {
-            val normalized = input
-                .replace("÷", "/")
-                .replace("×", "*")
-                .replace("%", "/100")
-            val result = eval(normalized)
-            tvResult.text = result
-        } catch (e: Exception) {
-            tvResult.text = "Ошибка"
+        if (lastNumeric) {
+            try {
+                val normalized = input
+                    .replace("÷", "/")
+                    .replace("×", "*")
+
+                val result = if (normalized.contains("%")) {
+                    // Обработка процентов
+                    val parts = normalized.split(Regex("(?=[+\\-*/])"))
+                    val number = parts.first().toDouble()
+                    val percent = parts.last().removePrefix("%").toDouble()
+                    number * (percent / 100)
+                } else {
+                    eval(normalized)
+                }
+
+                input = formatResult(result)
+                tvResult.text = input
+                lastNumeric = true
+                lastDot = input.contains('.')
+
+            } catch (e: Exception) {
+                tvResult.text = "Ошибка"
+                input = "Ошибка"
+            }
         }
     }
+
+    private fun formatResult(result: Double): String {
+        // ИСПОЛЬЗУЕМ Locale.US, ЧТОБЫ РАЗДЕЛИТЕЛЬ ВСЕГДА БЫЛ ТОЧКОЙ
+        val formatted = String.format(Locale.US, "%.8f", result)
+            .trimEnd('0')
+            .trimEnd('.')
+        return if (formatted == "-0") "0" else formatted
+    }
+
 
     private fun updateResult() {
         tvResult.text = input.ifEmpty { "0" }
     }
 
-    // Парсер (оставь как у тебя)
-    private fun eval(expr: String): String {
-        return try {
-            val result = object : Any() {
-                var pos = -1
-                var ch = 0
+    private fun eval(expr: String): Double {
+        return object : Any() {
+            var pos = -1
+            var ch = 0
 
-                fun nextChar() {
-                    ch = if (++pos < expr.length) expr[pos].code else -1
-                }
+            fun nextChar() {
+                ch = if (++pos < expr.length) expr[pos].code else -1
+            }
 
-                fun eat(charToEat: Int): Boolean {
-                    while (ch == ' '.code) nextChar()
-                    if (ch == charToEat) {
-                        nextChar()
-                        return true
-                    }
-                    return false
-                }
-
-                fun parse(): Double {
+            fun eat(charToEat: Int): Boolean {
+                while (ch == ' '.code) nextChar()
+                if (ch == charToEat) {
                     nextChar()
-                    val x = parseExpression()
-                    if (pos < expr.length) throw RuntimeException("Unexpected: " + expr[pos])
-                    return x
+                    return true
                 }
+                return false
+            }
 
-                fun parseExpression(): Double {
-                    var x = parseTerm()
-                    while (true) {
-                        when {
-                            eat('+'.code) -> x += parseTerm()
-                            eat('-'.code) -> x -= parseTerm()
-                            else -> return x
-                        }
+            fun parse(): Double {
+                nextChar()
+                val x = parseExpression()
+                if (pos < expr.length) throw RuntimeException("Unexpected: " + expr[pos])
+                return x
+            }
+
+            fun parseExpression(): Double {
+                var x = parseTerm()
+                while (true) {
+                    when {
+                        eat('+'.code) -> x += parseTerm()
+                        eat('-'.code) -> x -= parseTerm()
+                        else -> return x
                     }
                 }
+            }
 
-                fun parseTerm(): Double {
-                    var x = parseFactor()
-                    while (true) {
-                        when {
-                            eat('*'.code) -> x *= parseFactor()
-                            eat('/'.code) -> x /= parseFactor()
-                            else -> return x
-                        }
+            fun parseTerm(): Double {
+                var x = parseFactor()
+                while (true) {
+                    when {
+                        eat('*'.code) -> x *= parseFactor()
+                        eat('/'.code) -> x /= parseFactor()
+                        else -> return x
                     }
                 }
+            }
 
-                fun parseFactor(): Double {
-                    if (eat('+'.code)) return parseFactor()
-                    if (eat('-'.code)) return -parseFactor()
-                    var x: Double
-                    val startPos = pos
-                    if (eat('('.code)) {
-                        x = parseExpression()
-                        eat(')'.code)
-                    } else if ((ch in '0'.code..'9'.code) || ch == '.'.code) {
-                        while ((ch in '0'.code..'9'.code) || ch == '.'.code) nextChar()
-                        x = expr.substring(startPos, pos).toDouble()
-                    } else {
-                        throw RuntimeException("Unexpected: " + ch.toChar())
-                    }
-                    return x
+            fun parseFactor(): Double {
+                if (eat('+'.code)) return parseFactor()
+                if (eat('-'.code)) return -parseFactor()
+                var x: Double
+                val startPos = pos
+                if (eat('('.code)) {
+                    x = parseExpression()
+                    eat(')'.code)
+                } else if ((ch in '0'.code..'9'.code) || ch == '.'.code) {
+                    while ((ch in '0'.code..'9'.code) || ch == '.'.code) nextChar()
+                    x = expr.substring(startPos, pos).toDouble()
+                } else {
+                    throw RuntimeException("Unexpected: " + ch.toChar())
                 }
-            }.parse()
-            if (result % 1.0 == 0.0) result.toInt().toString() else result.toString()
-        } catch (e: Exception) {
-            "Ошибка"
-        }
+                return x
+            }
+        }.parse()
     }
 }

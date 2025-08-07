@@ -1,5 +1,6 @@
 <resources>
     <style name="CalculatorButton" parent="Widget.AppCompat.Button.Borderless">
         <item name="android:textSize">34sp</item>
+        <item name="android:stateListAnimator">@animator/button_press_animator</item>
     </style>
 </resources>
