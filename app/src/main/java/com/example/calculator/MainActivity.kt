@@ -21,13 +21,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // --- Код для запуска анимации фона ---
-        val rootLayout = findViewById<LinearLayout>(android.R.id.content).getChildAt(0) as LinearLayout
+        // --- ИСПРАВЛЕННЫЙ КОД ДЛЯ ЗАПУСКА АНИМАЦИИ ---
+        val rootLayout = findViewById<LinearLayout>(R.id.root_layout) // Находим наш LinearLayout по новому id
         val animDrawable = rootLayout.background as AnimationDrawable
         animDrawable.setEnterFadeDuration(10)
         animDrawable.setExitFadeDuration(5000)
         animDrawable.start()
-        // --- Конец кода для анимации ---
+        // --- Конец исправления ---
 
         tvResult = findViewById(R.id.tvResult)
         setupClickListeners()
