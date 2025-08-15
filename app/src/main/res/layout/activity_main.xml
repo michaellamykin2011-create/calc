@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root_layout"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
     android:background="@drawable/background_animated_gradient"
     android:layout_width="match_parent"
@@ -22,6 +24,11 @@
         android:padding="12dp"
         android:text="0"
         android:textColor="@color/displayText"
+        android:maxLines="1"
+        app:autoSizeTextType="uniform"
+        app:autoSizeMaxTextSize="52sp"
+        app:autoSizeMinTextSize="16sp"
+        app:autoSizeStepGranularity="2sp"
         android:textSize="52sp" />
 
     <GridLayout

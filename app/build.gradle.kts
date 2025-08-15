@@ -5,15 +5,15 @@ plugins {
 }
 
 android {
-    namespace = "com.example.calculator"
+    namespace = "com.example.newcalculator"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.example.calculator"
+        applicationId = "com.example.newcalculator"
         minSdk = 21
         targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "2.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

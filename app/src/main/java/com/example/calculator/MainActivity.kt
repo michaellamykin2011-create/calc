@@ -1,4 +1,4 @@
-package com.example.calculator
+package com.example.newcalculator
 
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
@@ -21,13 +21,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // --- ИСПРАВЛЕННЫЙ КОД ДЛЯ ЗАПУСКА АНИМАЦИИ ---
-        val rootLayout = findViewById<LinearLayout>(R.id.root_layout) // Находим наш LinearLayout по новому id
+        val rootLayout = findViewById<LinearLayout>(R.id.root_layout)
         val animDrawable = rootLayout.background as AnimationDrawable
         animDrawable.setEnterFadeDuration(10)
         animDrawable.setExitFadeDuration(5000)
         animDrawable.start()
-        // --- Конец исправления ---
 
         tvResult = findViewById(R.id.tvResult)
         setupClickListeners()
@@ -54,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btnMultiply).setHapticClickListener { onOperator("×") }
         findViewById<Button>(R.id.btnDivide).setHapticClickListener { onOperator("÷") }
         findViewById<Button>(R.id.btnEqual).setHapticClickListener { onEqual() }
-        findViewById<Button>(R.id.btnSign).setHapticClickListener { /* Логика для смены знака */ }
+        findViewById<Button>(R.id.btnSign).setHapticClickListener { onSignChange() }
     }
 
     private fun View.setHapticClickListener(action: (View) -> Unit) {
@@ -68,9 +66,12 @@ class MainActivity : AppCompatActivity() {
         if (input == "Ошибка") {
             input = ""
         }
-        input += digit
-        lastNumeric = true
-        updateResult()
+        // Проверяем, не превышен ли лимит в 11 символов
+        if (input.length < 11) {
+            input += digit
+            lastNumeric = true
+            updateResult()
+        }
     }
 
     private fun onDecimalPoint() {
@@ -107,21 +108,59 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // --- ОБНОВЛЕННАЯ ЛОГИКА ДЛЯ "+/-" ---
+    private fun onSignChange() {
+        if (input.isNotEmpty() && lastNumeric) {
+            val lastOperatorIndex = input.findLast { it in "+-×÷" }?.let { input.lastIndexOf(it) } ?: -1
+            val lastNumberString = if (lastOperatorIndex == -1) input else input.substring(lastOperatorIndex + 1)
+
+            if (lastNumberString.isNotEmpty()) {
+                val newLastNumberString = if (lastNumberString.startsWith("-")) {
+                    lastNumberString.substring(1)
+                } else {
+                    "-$lastNumberString"
+                }
+                val prefix = if (lastOperatorIndex == -1) "" else input.substring(0, lastOperatorIndex + 1)
+                input = prefix + newLastNumberString
+                updateResult()
+            }
+        }
+    }
+
+    // --- ОБНОВЛЕННАЯ ЛОГИКА ДЛЯ "=" С УЧЕТОМ ПРОЦЕНТОВ ---
     private fun onEqual() {
-        if (lastNumeric) {
+        if (lastNumeric || input.lastOrNull() == '%') {
             try {
-                val normalized = input
+                var expression = input
                     .replace("÷", "/")
                     .replace("×", "*")
 
-                val result = if (normalized.contains("%")) {
-                    val parts = normalized.split(Regex("(?=[+\\-*/])"))
-                    val number = parts.first().toDouble()
-                    val percent = parts.last().removePrefix("%").toDouble()
-                    number * (percent / 100)
-                } else {
-                    eval(normalized)
+                // Регулярное выражение для поиска конструкций вида "число оператор процент%"
+                val regex = Regex("(\\d+\\.?\\d*)([+\\-*/])(\\d+\\.?\\d*)%")
+                val match = regex.find(expression)
+
+                if (match != null) {
+                    val (baseNumberStr, operator, percentStr) = match.destructured
+                    val baseNumber = baseNumberStr.toDouble()
+                    val percentValue = percentStr.toDouble()
+
+                    // Вычисляем значение процента в зависимости от оператора
+                    val resultOfPercentCalc = when (operator) {
+                        "+", "-" -> baseNumber * (percentValue / 100.0) // Для + и - процент берется от базового числа
+                        "*", "/" -> percentValue / 100.0              // Для * и / процент просто переводится в десятичную дробь
+                        else -> 0.0
+                    }
+
+                    // Собираем новое выражение для вычисления
+                    expression = baseNumberStr + operator + resultOfPercentCalc.toString()
+
+                } else if (expression.endsWith("%") && !expression.contains(Regex("[+\\-*/]"))) {
+                    // Обработка случая, когда введено только число с процентом (например, "50%")
+                    val number = expression.removeSuffix("%").toDouble()
+                    expression = (number / 100.0).toString()
                 }
+
+                val result = eval(expression)
 
                 input = formatResult(result)
                 tvResult.text = input
@@ -134,6 +173,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
 
     private fun formatResult(result: Double): String {
         val formatted = String.format(Locale.US, "%.8f", result)
